@@ -67,14 +67,14 @@ function respond() {
           postMessage();
           sendText = 'Additional Results : ';
           for (var i=1; i < searchResult.length; i++) {
-            sendText += v.capitalize(searchResult[i]);
+            sendText += v.titleCase(searchResult[i]);
             if (i < searchResult.length-1) {
               sendText += ', ';
             }
           }
           postMessage();
         } else{
-          sendText = 'No Results Found - ' + v.capitalize(searchText);
+          sendText = 'No Results Found - ' + v.titleCase(searchText);
           postMessage();
         } 
       this.res.writeHead(200);
