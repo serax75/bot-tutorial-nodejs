@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var request = require('request');
-var latinise = require('voca/latinise');
+var v = require('latinise');
 var url = 'https://api.fiveringsdb.com/cards';
 
 //var querystring = require('querystring');
@@ -21,7 +21,7 @@ request({
         //console.log(body.size); // Print the json response
         var numCards = (body.size);
         for (var i=0; i < numCards; i++) {
-          cards.push(latinise(body.records[i].name.toLowerCase()));
+          cards.push(v.latinise(body.records[i].name.toLowerCase()));
           //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
           //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
           //console.log('Cards - ' + cards[i]);
@@ -67,14 +67,14 @@ function respond() {
           postMessage();
           sendText = 'Additional Results : ';
           for (var i=1; i < searchResult.length; i++) {
-            sendText += searchResult[i];
+            sendText += v.capitalize(searchResult[i]);
             if (i < searchResult.length-1) {
               sendText += ', ';
             }
           }
           postMessage();
         } else{
-          sendText = 'No Results Found - '+searchText;
+          sendText = 'No Results Found - ' + v.capitalize(searchText);
           postMessage();
         } 
       this.res.writeHead(200);
