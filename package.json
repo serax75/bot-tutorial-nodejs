@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "director": "^1.2.8",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "voca": "^1.3.0"
   },
   "devDependencies": {},
   "scripts": {
