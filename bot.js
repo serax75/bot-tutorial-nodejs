@@ -1,5 +1,6 @@
 var HTTPS = require('https');
 var request = require('request');
+var latinise = require('voca/latinise');
 var url = 'https://api.fiveringsdb.com/cards';
 
 //var querystring = require('querystring');
@@ -20,9 +21,9 @@ request({
         //console.log(body.size); // Print the json response
         var numCards = (body.size);
         for (var i=0; i < numCards; i++) {
-          cards.push(body.records[i].name.toLowerCase());
-          cards[i] = cards[i].replace(/ō/, 'o');
-          cards[i] = cards[i].replace(/ō/, 'o');
+          cards.push(latinise(body.records[i].name.toLowerCase()));
+          //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
+          //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
           //console.log('Cards - ' + cards[i]);
           cardID.push(body.records[i].id.toLowerCase());
           //console.log('IDs - ' + cardID.length);
