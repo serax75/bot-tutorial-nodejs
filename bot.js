@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var request = require('request');
-var v = require('latinise');
+var v = require('voca');
 var url = 'https://api.fiveringsdb.com/cards';
 
 //var querystring = require('querystring');
