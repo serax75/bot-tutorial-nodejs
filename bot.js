@@ -38,7 +38,7 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/,
       botRuleRegex = /^!rule/;
-
+console.log('Pulling card data');
   req.get({
       url: url,
       json: true
@@ -60,6 +60,7 @@ function respond() {
           }
         } 
       });
+      console.log('Card load compelte');
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
     //Search for Card info via API
     
