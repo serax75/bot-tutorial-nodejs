@@ -1,5 +1,5 @@
 var HTTPS = require('https');
-var req = require('request');
+var REQ = require('request');
 var v = require('voca');
 var url = 'https://api.fiveringsdb.com/cards';
 
@@ -12,7 +12,7 @@ var cardID = [];
 var cardSet = [];
 
 // - moving to the function to pull on demand, rather than just once at program start
-//req.get({
+//REQ.get({
     // url: url,
     // json: true
     // }, function (error, response, body) {
@@ -42,7 +42,7 @@ function respond() {
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
     //Search for Card info via API
     console.log('Pulling card data');
-    req.get({
+    REQ.get({
         url: url,
         json: true
         }, function (error, response, body) {
@@ -60,12 +60,14 @@ function respond() {
               //console.log(body.records[i].name);
             }
           }
+          
           //console.log('Cards - ' + cards.length);
           if (botCardRegex.test(request.text)) {
           searchText = (request.text.replace(/!card /i, ''));
           var cardRegex = new RegExp (searchText.toLowerCase());
           //console.log(cardRegex);
           var searchResult = [];
+          
           for (var i=0; i < cards.length; i++) {
             if (cardRegex.test(cards[i])) {
               searchResult.push(cards[i]);
@@ -74,6 +76,7 @@ function respond() {
               //console.log('Tested \"' + searchText.toLowerCase() + '\" against ' +  cards[i] + ' - No Match');
             }
           }
+          
           if (searchResult.length == 1) {
               var match = cards.indexOf(searchResult[0]);
               //console.log('Match - ' + searchResult + ' ' + match)
