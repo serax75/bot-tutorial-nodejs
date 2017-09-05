@@ -60,53 +60,54 @@ function respond() {
               //console.log(body.records[i].name);
             }
           }
-          console.log('Cards - ' + cards.length);
-        });
-      console.log('Card load compelte');
-    if (botCardRegex.test(request.text)) {
-      searchText = (request.text.replace(/!card /i, ''));
-      var cardRegex = new RegExp (searchText.toLowerCase());
-      //console.log(cardRegex);
-      var searchResult = [];
-      for (var i=0; i < cards.length; i++) {
-        if (cardRegex.test(cards[i])) {
-          searchResult.push(cards[i]);
-          //console.log(cards[i]+ ' matches '+searchText+' index '+i);
-        } else {
-          //console.log('Tested \"' + searchText.toLowerCase() + '\" against ' +  cards[i] + ' - No Match');
-        }
-      }
-      if (searchResult.length == 1) {
-          var match = cards.indexOf(searchResult[0]);
-          //console.log('Match - ' + searchResult + ' ' + match)
-          sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
-          postMessage();
-          //console.log (searchText);
-        } else if (searchResult.length > 1) {
-          match = cards.indexOf(searchResult[0]);
-          sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
-          postMessage();
-          sendText = 'Additional Results : ';
-          for (var i=1; i < searchResult.length; i++) {
-            sendText += v.titleCase(searchResult[i]);
-            if (i < searchResult.length-1) {
-              sendText += ', ';
+          //console.log('Cards - ' + cards.length);
+          if (botCardRegex.test(request.text)) {
+          searchText = (request.text.replace(/!card /i, ''));
+          var cardRegex = new RegExp (searchText.toLowerCase());
+          //console.log(cardRegex);
+          var searchResult = [];
+          for (var i=0; i < cards.length; i++) {
+            if (cardRegex.test(cards[i])) {
+              searchResult.push(cards[i]);
+              //console.log(cards[i]+ ' matches '+searchText+' index '+i);
+            } else {
+              //console.log('Tested \"' + searchText.toLowerCase() + '\" against ' +  cards[i] + ' - No Match');
             }
           }
+          if (searchResult.length == 1) {
+              var match = cards.indexOf(searchResult[0]);
+              //console.log('Match - ' + searchResult + ' ' + match)
+              sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+              postMessage();
+              //console.log (searchText);
+            } else if (searchResult.length > 1) {
+              match = cards.indexOf(searchResult[0]);
+              sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+              postMessage();
+              sendText = 'Additional Results : ';
+              for (var i=1; i < searchResult.length; i++) {
+                sendText += v.titleCase(searchResult[i]);
+                if (i < searchResult.length-1) {
+                  sendText += ', ';
+                }
+              }
+              postMessage();
+            } else{
+              sendText = 'No Results Found - ' + v.titleCase(searchText);
+              postMessage();
+            } 
+          this.res.writeHead(200);
+          
+          this.res.end(); 
+        } else {
+          searchText = (request.text.replace(/!rule /i, ''));
+          this.res.writeHead(200);
           postMessage();
-        } else{
-          sendText = 'No Results Found - ' + v.titleCase(searchText);
-          postMessage();
-        } 
-      this.res.writeHead(200);
-      
-      this.res.end(); 
-    } else {
-      searchText = (request.text.replace(/!rule /i, ''));
-      this.res.writeHead(200);
-      postMessage();
-      this.res.end();
-    }
+          this.res.end();
+        }
+        });
+    console.log('Card load complete');
+    
   } else {
     console.log("don't care");
     this.res.writeHead(200);
