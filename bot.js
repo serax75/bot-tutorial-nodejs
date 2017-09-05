@@ -1,5 +1,5 @@
 var HTTPS = require('https');
-var request = require('request');
+var req = require('request');
 var v = require('voca');
 var url = 'https://api.fiveringsdb.com/cards';
 
@@ -12,7 +12,7 @@ var cardID = [];
 var cardSet = [];
 
 // - moving to the function to pull on demand, rather than just once at program start
-//request.get({
+//req.get({
     // url: url,
     // json: true
     // }, function (error, response, body) {
@@ -38,7 +38,8 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/,
       botRuleRegex = /^!rule/;
-  request.get({
+
+  req.get({
       url: url,
       json: true
       }, function (error, response, body) {
