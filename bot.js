@@ -59,9 +59,7 @@ function respond() {
             var numCards = (body.size);
             for (var i=0; i < numCards; i++) {
               cards.push(v.latinise(body.records[i].name.toLowerCase()));
-              //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-              //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-              //console.log('Cards - ' + cards[i]);
+              console.log('Card '+ i + ' ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
