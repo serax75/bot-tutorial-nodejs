@@ -57,7 +57,9 @@ function respond() {
           if (!error && response.statusCode === 200) {
             //console.log(body.size); // Print the json response
             var numCards = (body.size);
-            for (var i=0; i < numCards; i++) {
+            
+          }
+          for (var i=0; i < numCards; i++) {
               cards.push(v.latinise(body.records[i].name.toLowerCase()));
               console.log('Card '+ i + ' ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
@@ -66,7 +68,6 @@ function respond() {
               //console.log(cardSet);
               //console.log(body.records[i].name);
             }
-          } 
         });
       console.log('REQ end');
       console.log(cards.length);
