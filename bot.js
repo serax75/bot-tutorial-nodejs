@@ -48,6 +48,7 @@ function respond() {
       //console.log(cardRegex);
       var searchResult = [];
       
+      console.log('REQ start');
       REQ.get({
         url: url,
         json: true
@@ -69,6 +70,7 @@ function respond() {
             }
           } 
         });
+      console.log('REQ end');
       
       for (var i=0; i < cards.length; i++) {
         if (cardRegex.test(cards[i])) {
