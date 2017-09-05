@@ -102,14 +102,14 @@ function respond() {
               sendText = 'No Results Found - ' + v.titleCase(searchText);
               postMessage();
             } 
-          //request.res.writeHead(200);
+          this.res.writeHead(200);
           
-          request.res.end(); 
+          this.res.end(); 
         } else {
           searchText = (request.text.replace(/!rule /i, ''));
-          //request.res.writeHead(200);
+          this.res.writeHead(200);
           postMessage();
-          request.res.end();
+          this.res.end();
         }  
   } else {
     console.log("don't care");
