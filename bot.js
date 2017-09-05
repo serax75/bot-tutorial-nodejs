@@ -99,14 +99,14 @@ function respond() {
               sendText = 'No Results Found - ' + v.titleCase(searchText);
               postMessage();
             } 
-          this.res.writeHead(200);
+          request.res.writeHead(200);
           
-          this.res.end(); 
+          request.res.end(); 
         } else {
           searchText = (request.text.replace(/!rule /i, ''));
-          this.res.writeHead(200);
+          request.res.writeHead(200);
           postMessage();
-          this.res.end();
+          request.res.end();
         }
         });
     console.log('Card load complete');
