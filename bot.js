@@ -99,12 +99,12 @@ function respond() {
               sendText = 'No Results Found - ' + v.titleCase(searchText);
               postMessage();
             } 
-          request.res.writeHead(200);
+          //request.res.writeHead(200);
           
           request.res.end(); 
         } else {
           searchText = (request.text.replace(/!rule /i, ''));
-          request.res.writeHead(200);
+          //request.res.writeHead(200);
           postMessage();
           request.res.end();
         }
