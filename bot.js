@@ -38,32 +38,30 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/,
       botRuleRegex = /^!rule/;
-console.log('Pulling card data');
-  req.get({
-      url: url,
-      json: true
-      }, function (error, response, body) {
-  
-        if (!error && response.statusCode === 200) {
-          //console.log(body.size); // Print the json response
-          var numCards = (body.size);
-          for (var i=0; i < numCards; i++) {
-            cards.push(v.latinise(body.records[i].name.toLowerCase()));
-            //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-            //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-            //console.log('Cards - ' + cards[i]);
-            cardID.push(body.records[i].id.toLowerCase());
-            //console.log('IDs - ' + cardID.length);
-            cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-            //console.log(cardSet);
-            //console.log(body.records[i].name);
-          }
-        } 
-      });
-      console.log('Card load compelte');
+
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
     //Search for Card info via API
+    console.log('Pulling card data');
+    req.get({
+        url: url,
+        json: true
+        }, function (error, response, body) {
     
+          if (!error && response.statusCode === 200) {
+            //console.log(body.size); // Print the json response
+            var numCards = (body.size);
+            for (var i=0; i < numCards; i++) {
+              cards.push(v.latinise(body.records[i].name.toLowerCase()));
+              //console.log('Cards - ' + cards[i]);
+              cardID.push(body.records[i].id.toLowerCase());
+              //console.log('IDs - ' + cardID.length);
+              cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+              //console.log(cardSet);
+              //console.log(body.records[i].name);
+            }
+          } 
+        });
+      console.log('Card load compelte');
     if (botCardRegex.test(request.text)) {
       searchText = (request.text.replace(/!card /i, ''));
       var cardRegex = new RegExp (searchText.toLowerCase());
