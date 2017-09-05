@@ -59,7 +59,8 @@ function respond() {
               //console.log(cardSet);
               //console.log(body.records[i].name);
             }
-          } 
+          }
+          console.log('Cards - ' + cards.length);
         });
       console.log('Card load compelte');
     if (botCardRegex.test(request.text)) {
