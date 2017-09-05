@@ -71,7 +71,7 @@ function respond() {
           } 
         });
       console.log('REQ end');
-      
+      console.log(cards.length);
       for (var i=0; i < cards.length; i++) {
         if (cardRegex.test(cards[i])) {
           searchResult.push(cards[i]);
