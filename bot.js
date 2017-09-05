@@ -12,28 +12,30 @@ var cardID = [];
 var cardSet = [];
 
 
-// REQ.get({
-//     url: url,
-//     json: true
-//     }, function (error, response, body) {
+function getCards(){
+  REQ.get({
+    url: url,
+    json: true
+    }, function (error, response, body) {
 
-//       if (!error && response.statusCode === 200) {
-//         //console.log(body.size); // Print the json response
-//         var numCards = (body.size);
-//         for (var i=0; i < numCards; i++) {
-//           cards.push(v.latinise(body.records[i].name.toLowerCase()));
-//           //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-//           //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-//           //console.log('Cards - ' + cards[i]);
-//           cardID.push(body.records[i].id.toLowerCase());
-//           //console.log('IDs - ' + cardID.length);
-//           cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-//           //console.log(cardSet);
-//           //console.log(body.records[i].name);
-//         }
-//       } 
-//     });
-    
+      if (!error && response.statusCode === 200) {
+        //console.log(body.size); // Print the json response
+        var numCards = (body.size);
+        for (var i=0; i < numCards; i++) {
+          cards.push(v.latinise(body.records[i].name.toLowerCase()));
+          //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
+          //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
+          //console.log('Cards - ' + cards[i]);
+          cardID.push(body.records[i].id.toLowerCase());
+          //console.log('IDs - ' + cardID.length);
+          cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+          //console.log(cardSet);
+          //console.log(body.records[i].name);
+        }
+      } 
+    });
+}
+
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/i,
@@ -41,36 +43,13 @@ function respond() {
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
     //Search for Card info via API
-    
+    getCards();
     if (botCardRegex.test(request.text)) {
       searchText = (request.text.replace(/!card /i, ''));
       var cardRegex = new RegExp (searchText.toLowerCase());
       //console.log(cardRegex);
       var searchResult = [];
       
-      console.log('REQ start');
-      REQ.get({
-        url: url,
-        json: true
-        }, function (error, response, body) {
-
-          if (!error && response.statusCode === 200) {
-            //console.log(body.size); // Print the json response
-            var numCards = (body.size);
-            
-          }
-          for (var i=0; i < numCards; i++) {
-              cards.push(v.latinise(body.records[i].name.toLowerCase()));
-              console.log('Card '+ i + ' ' + cards[i]);
-              cardID.push(body.records[i].id.toLowerCase());
-              //console.log('IDs - ' + cardID.length);
-              cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-              //console.log(cardSet);
-              //console.log(body.records[i].name);
-            }
-        });
-      console.log('REQ end');
-      console.log(cards.length);
       for (var i=0; i < cards.length; i++) {
         if (cardRegex.test(cards[i])) {
           searchResult.push(cards[i]);
