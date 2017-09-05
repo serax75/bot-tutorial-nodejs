@@ -62,7 +62,10 @@ function respond() {
           }
           
           //console.log('Cards - ' + cards.length);
-          if (botCardRegex.test(request.text)) {
+          
+        });
+    console.log('Card load complete');
+  if (botCardRegex.test(request.text)) {
           searchText = (request.text.replace(/!card /i, ''));
           var cardRegex = new RegExp (searchText.toLowerCase());
           //console.log(cardRegex);
@@ -107,10 +110,7 @@ function respond() {
           //request.res.writeHead(200);
           postMessage();
           request.res.end();
-        }
-        });
-    console.log('Card load complete');
-    
+        }  
   } else {
     console.log("don't care");
     this.res.writeHead(200);
