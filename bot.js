@@ -12,7 +12,7 @@ var cardID = [];
 var cardSet = [];
 
 
-function getCards(){
+function getCards(callback){
   REQ.get({
     url: url,
     json: true
@@ -34,6 +34,7 @@ function getCards(){
         }
       } 
     });
+    callback;
 }
 
 function respond() {
