@@ -3,31 +3,6 @@ var REQ = require('request');
 var v = require('voca');
 var botID = process.env.BOT_ID;
 var sendText = '';
-//var querystring = require('querystring');
-
-
-
-
-// REQ.get({
-//   url: url,
-//   json: true
-//   }, function (error, response, body) {
-//     if (!error && response.statusCode === 200) {
-//     //console.log(body.size); // Print the json response
-//       var numCards = (body.size);
-//       for (var i=0; i < numCards; i++) {
-//         cards.push(v.latinise(body.records[i].name.toLowerCase()));
-//         //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-//         //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-//         //console.log('Cards - ' + cards[i]);
-//         cardID.push(body.records[i].id.toLowerCase());
-//         //console.log('IDs - ' + cardID.length);
-//         cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-//         //console.log(cardSet);
-//         //console.log(body.records[i].name);
-//       }
-//     } 
-//   });
   
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -37,17 +12,15 @@ function respond() {
       searchText = '',
       cards = [],
       cardID = [],
-      cardSet = [];
-
+      cardSet = [],
+      searchResult = [];
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
-    //Search for Card info via API
     if (botCardRegex.test(request.text)) {
       searchText = (request.text.replace(/!card /i, ''));
       var cardRegex = new RegExp (searchText.toLowerCase());
-      //console.log(cardRegex);
-      var searchResult = [];
-      REQ.get({
+      //Search for Card info via API
+      REQ.get({  
         url: url,
         json: true
         }, function (error, response, body) {
@@ -56,8 +29,6 @@ function respond() {
             var numCards = (body.size);
             for (var i=0; i < numCards; i++) {
               cards.push(v.latinise(body.records[i].name.toLowerCase()));
-              //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
-              //cards[i] = cards[i].replace(/ō/, 'o'); --Obsolete due to Latinise
               //console.log('Cards - ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
@@ -98,19 +69,15 @@ function respond() {
             postMessage();
           } 
         });
-    this.res.writeHead(200);
-    this.res.end(); 
     } else {
       searchText = (request.text.replace(/!rule /i, ''));
-      this.res.writeHead(200);
       postMessage();
-      this.res.end();
     }
   } else {
     console.log("don't care");
-    this.res.writeHead(200);
-    this.res.end();
   }
+  this.res.writeHead(200);
+  this.res.end();
 }
 
 function postMessage() {
