@@ -1,15 +1,11 @@
 var HTTPS = require('https');
 var REQ = require('request');
 var v = require('voca');
-var url = 'https://api.fiveringsdb.com/cards';
-
-//var querystring = require('querystring');
-var searchText = '';
-var sendText = '';
 var botID = process.env.BOT_ID;
-var cards = [];
-var cardID = [];
-var cardSet = [];
+var sendText = '';
+//var querystring = require('querystring');
+
+
 
 
 // REQ.get({
@@ -36,7 +32,13 @@ var cardSet = [];
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/i,
-      botRuleRegex = /^!rule/i;
+      botRuleRegex = /^!rule/i,
+      url = 'https://api.fiveringsdb.com/cards',
+      searchText = '',
+      cards = [],
+      cardID = [],
+      cardSet = [];
+
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
     //Search for Card info via API
