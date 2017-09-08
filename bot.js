@@ -1,6 +1,8 @@
 var HTTPS = require('https');
 var REQ = require('request');
 var v = require('voca');
+var fs= require('fs');
+
 var botID = process.env.BOT_ID;
 var sendText = '';
   
@@ -29,8 +31,9 @@ function respond() {
           if (!error && response.statusCode === 200) {
           //console.log(body.size); // Print the json response
             var numCards = (body.size);
+            console.log ('Length = ' + body.length);
             for (var i=0; i < numCards; i++) {
-              cards.push(v.latinise(body.records[i].name.toLowerCase()));
+              cards.push(body.records[i].name_canonical);
               //console.log('Cards - ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
@@ -80,6 +83,9 @@ function respond() {
       searchText = (request.text.replace(/!sh /i, ''));
       var shRegex = new RegExp (searchText.toLowerCase());
       sendText = 'StrongHold list not implemented at this time';
+      if (searchText == '') {
+        
+      }
       postMessage();
     }
 
