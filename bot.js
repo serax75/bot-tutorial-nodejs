@@ -31,7 +31,7 @@ function respond() {
           if (!error && response.statusCode === 200) {
           //console.log(body.size); // Print the json response
             var numCards = (body.size);
-            console.log ('Length = ' + body.length);
+            //console.log ('Length = ' + body.length);
             for (var i=0; i < numCards; i++) {
               cards.push(body.records[i].name_canonical);
               //console.log('Cards - ' + cards[i]);
