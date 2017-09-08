@@ -8,6 +8,7 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/i,
       botRuleRegex = /^!rule/i,
+      botSHRegex = /^!sh/i,
       url = 'https://api.fiveringsdb.com/cards',
       searchText = '',
       cards = [],
@@ -16,7 +17,8 @@ function respond() {
       searchResult = [];
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
-    if (botCardRegex.test(request.text)) {
+
+    if (botCardRegex.test(request.text)) {  //Process card search
       searchText = (request.text.replace(/!card /i, ''));
       var cardRegex = new RegExp (searchText.toLowerCase());
       //Search for Card info via API
@@ -69,10 +71,19 @@ function respond() {
             postMessage();
           } 
         });
-    } else {
+
+    } else if (botRuleRegex.test(request.text)) {  //Process Rules Question
       searchText = (request.text.replace(/!rule /i, ''));
+      sendText = 'Rules Checking not implemented at this time';
+      postMessage();
+    } else if (botSHRegex.test(request.text)) {
+      searchText = (request.text.replace(/!sh /i, ''));
+      var shRegex = new RegExp (searchText.toLowerCase());
+      sendText = 'StrongHold list not implemented at this time';
       postMessage();
     }
+
+
   } else {
     console.log("don't care");
   }
