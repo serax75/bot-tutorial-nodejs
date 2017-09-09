@@ -30,9 +30,9 @@ function respond() {
         }, function (error, response, body) {
           if (!error && response.statusCode === 200) {
           //console.log(body.size); // Print the json response
-            var numCards = (body.size);
+            //var numCards = (body.size);
             //console.log ('Length = ' + body.length);
-            for (var i=0; i < numCards; i++) {
+            for (var i=0; i < body.size; i++) {
               cards.push(body.records[i].name_canonical);
               //console.log('Cards - ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
