@@ -6,17 +6,17 @@ var botID = process.env.BOT_ID;
 var sendText = '';
 
 function getCards() {
-  if (fs.accessSync('cards.json')) {
-    var cardsLocal = JSON.parse(fs.readFileSync('cards.json'));
+  if (fs.accessSync("cards.json")) {
+    var cardsLocal = JSON.parse(fs.readFileSync("cards.json"));
     var cardsRemote = REQ.get('https://api.fiveringsdb.com/cards');
   } else {
-    REQ.get('https://api.fiveringsdb.com/cards').pipe(fs.createWriteStream('cards.json'));
-    cardsLocal = cardsRemote = JSON.parse('cards.json');
+    REQ.get('https://api.fiveringsdb.com/cards').pipe(fs.createWriteStream("cards.json"));
+    cardsLocal = cardsRemote = JSON.parse("cards.json");
   }
   if (cardsLocal.last_updated == cardsRemote.last_updated) {
     return (cardsLocal);
   } else {
-    fs.writeFile('cards.json', cardsRemote);
+    fs.writeFile("cards.json", cardsRemote);
     return (cardsRemote);
   }
 } 
@@ -35,7 +35,7 @@ function respond() {
       var cardRegex = new RegExp (searchText.toLowerCase());
       //Search for Card info via API
       getCards();
-      
+      sendText = 'Test';
     } else if (botRuleRegex.test(request.text)) {  //Process Rules Question
       searchText = (request.text.replace(/!rule /i, ''));
       sendText = 'Rules Checking not implemented at this time';
