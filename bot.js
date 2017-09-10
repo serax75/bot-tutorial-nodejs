@@ -5,7 +5,8 @@ var fs= require('fs');
 
 var botID = process.env.BOT_ID;
 var sendText = '';
-  
+
+
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botCardRegex = /^!card/i,
