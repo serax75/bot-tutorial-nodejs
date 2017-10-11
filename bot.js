@@ -17,6 +17,7 @@ function respond() {
       cards = [],
       cardID = [],
       cardSet = [],
+      cardURL = [],
       searchResult = [];
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
@@ -39,6 +40,7 @@ function respond() {
               cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+              cardURL.push(body.records[i].pack_cards[0].image_url);
               //console.log(cardSet);
               //console.log(body.records[i].name);
             }
@@ -56,12 +58,14 @@ function respond() {
           if (searchResult.length == 1) {
             var match = cards.indexOf(searchResult[0]);
             //console.log('Match - ' + searchResult + ' ' + match)
-            sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            sendText = cardURL[match];
             postMessage();
             //console.log (searchText);
           } else if (searchResult.length > 1) {
             match = cards.indexOf(searchResult[0]);
-            sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            sendText = cardURL[match];
             postMessage();
             sendText = 'Additional Results : ';
             for (var i=1; i < searchResult.length; i++) {
