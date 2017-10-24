@@ -40,10 +40,13 @@ function respond() {
               //cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-              //cardURL.push(body.records[i].pack_cards[0].image_url);
+              if (body.records[i].pack_cards[0].length > 1)
+              {
+                cardURL.push(body.records[i].pack_cards[0].image_url);
+              }
               //console.log(cardSet);
               //console.log(body.records[i].name);
-              console.log(body.records[i]);
+              //console.log(body.records[i]);
             }
           }
           
