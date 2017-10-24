@@ -42,7 +42,8 @@ function respond() {
               //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
               //cardURL.push(body.records[i].pack_cards[0].image_url);
               //console.log(cardSet);
-              console.log(body.records[i].name);
+              //console.log(body.records[i].name);
+              console.log(body.records[i].pack_cards[0].image.url);
             }
           }
           
