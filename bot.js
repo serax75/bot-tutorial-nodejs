@@ -37,7 +37,7 @@ function respond() {
             for (var i=0; i < body.size; i++) {
               cards.push(body.records[i].name_canonical);
               //console.log('Cards - ' + cards[i]);
-              cardID.push(body.records[i].id.toLowerCase());
+              //cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
               cardURL.push(body.records[i].pack_cards[0].image_url);
