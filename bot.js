@@ -39,7 +39,7 @@ function respond() {
               //console.log('Cards - ' + cards[i]);
               cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
-              cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+              //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
               cardURL.push(body.records[i].pack_cards[0].image_url);
               //console.log(cardSet);
               //console.log(body.records[i].name);
