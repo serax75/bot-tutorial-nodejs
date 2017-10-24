@@ -40,7 +40,7 @@ function respond() {
               //cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-              if (body.records[i].pack_cards[0].image_url)
+              if (body.records[i].pack_cards[0].image_url !== undefined)
               {
                 cardURL.push(body.records[i].pack_cards[0].image_url);
               }
