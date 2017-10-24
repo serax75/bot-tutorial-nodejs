@@ -45,7 +45,7 @@ function respond() {
                 cardURL.push(body.records[i].pack_cards[0].image_url);
               } else
               {
-                cardURL.push('No card URL for this card yet.');
+                cardURL.push(body.records[i].name + ' - No card URL for this card yet.');
               }
               //console.log(cardSet);
               //console.log(body.records[i].name);
