@@ -43,7 +43,7 @@ function respond() {
               //cardURL.push(body.records[i].pack_cards[0].image_url);
               //console.log(cardSet);
               //console.log(body.records[i].name);
-              console.log(body.records[i].pack_cards[0].image.url);
+              console.log(body.records[i].pack_cards[0].image_url);
             }
           }
           
