@@ -18,6 +18,7 @@ function respond() {
       //cardID = [],
       //cardSet = [],
       cardURL = [],
+      cardText = [],
       searchResult = [];
 
   if(request.text && (botCardRegex.test(request.text) || botRuleRegex.test(request.text))) {
@@ -40,12 +41,13 @@ function respond() {
               //cardID.push(body.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
               //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+              cardText.push(body.records[i].text_canonical);
               if (body.records[i].pack_cards[0] !== undefined)
               {
                 cardURL.push(body.records[i].pack_cards[0].image_url);
               } else
               {
-                cardURL.push(body.records[i].name + ' - No card URL for this card yet.');
+                cardURL.push(body.records[i].name + ' - No card URL for this card yet.\nCard text : ' + cardText[i]);
               }
               //console.log(cardSet);
               //console.log(body.records[i].name);
