@@ -30,28 +30,28 @@ function respond() {
       REQ.get({  
         url: url,
         json: true
-        }, function (error, response, body) {
+        }, function (error, response, cardbody) {
           if (!error && response.statusCode === 200) {
-          //console.log(body.size); // Print the json response
-            //var numCards = (body.size);
-            //console.log ('Length = ' + body.length);
-            for (var i=0; i < body.size; i++) {
-              cards.push(body.records[i].name_canonical);
+          //console.log(cardbody.size); // Print the json response
+            //var numCards = (cardbody.size);
+            //console.log ('Length = ' + cardbody.length);
+            for (var i=0; i < cardbody.size; i++) {
+              cards.push(cardbody.records[i].name_canonical);
               //console.log('Cards - ' + cards[i]);
-              //cardID.push(body.records[i].id.toLowerCase());
+              //cardID.push(cardbody.records[i].id.toLowerCase());
               //console.log('IDs - ' + cardID.length);
-              //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-              cardText.push(body.records[i].text_canonical);
-              if (body.records[i].pack_cards[0] !== undefined)
+              //cardSet.push(cardbody.records[i].pack_cards[0].pack.id.toLowerCase());
+              cardText.push(cardbody.records[i].text_canonical);
+              if (cardbody.records[i].pack_cards[0] !== undefined)
               {
-                cardURL.push(body.records[i].pack_cards[0].image_url);
+                cardURL.push(cardbody.records[i].pack_cards[0].image_url);
               } else
               {
-                cardURL.push(body.records[i].name + ' - No card URL for this card yet.\nCard text : ' + cardText[i]);
+                cardURL.push(cardbody.records[i].name + ' - No card URL for this card yet.\nCard text : ' + cardText[i]);
               }
               //console.log(cardSet);
-              //console.log(body.records[i].name);
-              //console.log(body.records[i]);
+              //console.log(cardbody.records[i].name);
+              //console.log(cardbody.records[i]);
             }
           }
           
@@ -94,33 +94,15 @@ function respond() {
     } else if (botRuleRegex.test(request.text)) {  //Process Rules Question
       searchText = (request.text.replace(/!rule /i, ''));
       var ruleRegex = new RegExp (searchText.toLowerCase());
+      var rules =[];
       //sendText = 'Rules Checking not implemented at this time';
       REQ.get({  
         url: url,
         json: true
-        }, function (error, response, body) {
+        }, function (error, response, cardbody) {
           if (!error && response.statusCode === 200) {
-          //console.log(body.size); // Print the json response
-            //var numCards = (body.size);
-            //console.log ('Length = ' + body.length);
-            for (var i=0; i < body.size; i++) {
-              cards.push(body.records[i].name_canonical);
-              //console.log('Cards - ' + cards[i]);
-              //cardID.push(body.records[i].id.toLowerCase());
-              //console.log('IDs - ' + cardID.length);
-              //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
-            //   cardText.push(body.records[i].text_canonical);
-            //   if (body.records[i].pack_cards[0] !== undefined)
-            //   {
-            //     cardURL.push(body.records[i].pack_cards[0].image_url);
-            //   } else
-            //   {
-            //     cardURL.push(body.records[i].name + ' - No card URL for this card yet.\nCard text : ' + cardText[i]);
-            //   }
-            //   //console.log(cardSet);
-            //   //console.log(body.records[i].name);
-            //   //console.log(body.records[i]);
-            // }
+            for (var i=0; i < cardbody.size; i++) {
+              cards.push(cardbody.records[i].name_canonical);
           }
           
           for (var i=0; i < cards.length; i++) {
@@ -136,7 +118,16 @@ function respond() {
             var match = cards.indexOf(searchResult[0]);
             //console.log('Match - ' + searchResult + ' ' + match)
             //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
-            sendText = 'https://api.fiveringsdb.com/cards/'+match+'git/rulings';
+            REQ.get({  
+            url: 'https://fiveringsdb.com/cards/'+match[0]+'/rulings',
+            json: true
+            }, function (error, response, rulebody) {
+              if (!error && response.statusCode === 200) {
+                for (var j=0; j < rulebody.size; j++) {
+                  sendText += (rulebody.records[i].text);
+                }
+              }
+            });  
             postMessage();
             //console.log (searchText);
           } else if (searchResult.length > 1) {
@@ -176,7 +167,7 @@ function respond() {
 }
 
 function postMessage() {
-  var botResponse, options, body, botReq;
+  var botResponse, options, cardbody, botReq;
 
   botResponse = sendText;
 
@@ -186,7 +177,7 @@ function postMessage() {
     method: 'POST'
   };
 
-  body = {
+  cardbody = {
     "bot_id" : botID,
     "text" : botResponse
   };
@@ -207,7 +198,7 @@ function postMessage() {
   botReq.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq.end(JSON.stringify(body));
+  botReq.end(JSON.stringify(cardbody));
 }
 
 exports.respond = respond;
