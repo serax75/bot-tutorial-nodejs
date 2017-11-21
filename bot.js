@@ -135,7 +135,7 @@ function respond() {
             var match = cards.indexOf(searchResult[0]);
             //console.log('Match - ' + searchResult + ' ' + match)
             //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
-            sendText = 'https://api.fiveringsdb.com/cards/'+match+'/rulings';
+            sendText = 'https://api.fiveringsdb.com/cards/'+match+'git/rulings';
             postMessage();
             //console.log (searchText);
           } else if (searchResult.length > 1) {
@@ -154,7 +154,8 @@ function respond() {
             sendText = 'No Results Found - ' + v.titleCase(searchText);
             postMessage();
           } 
-        });
+        }
+      });
     } else if (botSHRegex.test(request.text)) {
       searchText = (request.text.replace(/!sh /i, ''));
       var shRegex = new RegExp (searchText.toLowerCase());
