@@ -93,6 +93,7 @@ function respond() {
 
     } else if (botRuleRegex.test(request.text)) {  //Process Rules Question
       searchText = (request.text.replace(/!rule /i, ''));
+      var ruleRegex = new RegExp (searchText.toLowerCase());
       //sendText = 'Rules Checking not implemented at this time';
       REQ.get({  
         url: url,
@@ -123,7 +124,7 @@ function respond() {
           }
           
           for (var i=0; i < cards.length; i++) {
-            if (cardRegex.test(cards[i])) {
+            if (ruleRegex.test(cards[i])) {
             searchResult.push(cards[i]);
             //console.log(cards[i]+ ' matches '+searchText+' index '+i);
             } else {
