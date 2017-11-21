@@ -89,10 +89,72 @@ function respond() {
           } 
         });
 
+//  Check for rulings against the card database
+
     } else if (botRuleRegex.test(request.text)) {  //Process Rules Question
       searchText = (request.text.replace(/!rule /i, ''));
-      sendText = 'Rules Checking not implemented at this time';
-      postMessage();
+      //sendText = 'Rules Checking not implemented at this time';
+      REQ.get({  
+        url: url,
+        json: true
+        }, function (error, response, body) {
+          if (!error && response.statusCode === 200) {
+          //console.log(body.size); // Print the json response
+            //var numCards = (body.size);
+            //console.log ('Length = ' + body.length);
+            for (var i=0; i < body.size; i++) {
+              cards.push(body.records[i].name_canonical);
+              //console.log('Cards - ' + cards[i]);
+              //cardID.push(body.records[i].id.toLowerCase());
+              //console.log('IDs - ' + cardID.length);
+              //cardSet.push(body.records[i].pack_cards[0].pack.id.toLowerCase());
+            //   cardText.push(body.records[i].text_canonical);
+            //   if (body.records[i].pack_cards[0] !== undefined)
+            //   {
+            //     cardURL.push(body.records[i].pack_cards[0].image_url);
+            //   } else
+            //   {
+            //     cardURL.push(body.records[i].name + ' - No card URL for this card yet.\nCard text : ' + cardText[i]);
+            //   }
+            //   //console.log(cardSet);
+            //   //console.log(body.records[i].name);
+            //   //console.log(body.records[i]);
+            // }
+          }
+          
+          for (var i=0; i < cards.length; i++) {
+            if (cardRegex.test(cards[i])) {
+            searchResult.push(cards[i]);
+            //console.log(cards[i]+ ' matches '+searchText+' index '+i);
+            } else {
+            //console.log('Tested \"' + searchText.toLowerCase() + '\" against ' +  cards[i] + ' - No Match');
+            }
+          }
+          
+          if (searchResult.length == 1) {
+            var match = cards.indexOf(searchResult[0]);
+            //console.log('Match - ' + searchResult + ' ' + match)
+            //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            sendText = 'https://api.fiveringsdb.com/cards/'+match+'/rulings';
+            postMessage();
+            //console.log (searchText);
+          } else if (searchResult.length > 1) {
+            match = cards.indexOf(searchResult[0]);
+            //sendText = 'https://fiveringsdb.com/static/cards/' + cardSet[match] + '/' + cardID[match] + '.jpg';
+            sendText = cardURL[match];
+            postMessage();
+            sendText = 'Additional Results : ';
+            for (var i=1; i < searchResult.length; i++) {
+              sendText += v.titleCase(searchResult[i]);
+              if (i < searchResult.length-1) {
+                sendText += ', ';
+              }
+            }
+          } else {
+            sendText = 'No Results Found - ' + v.titleCase(searchText);
+            postMessage();
+          } 
+        });
     } else if (botSHRegex.test(request.text)) {
       searchText = (request.text.replace(/!sh /i, ''));
       var shRegex = new RegExp (searchText.toLowerCase());
